@@ -154,8 +154,8 @@ def analyze_video(video_path, prompt, interval_secs=1.0, max_workers=8, start_ti
         f"You are a poker commentator. Below is a JSON array of frame analyses:\n\n"
         f"{json.dumps(raw_results)}\n\n"
         "For each entry decide if it's worthy of commentary, following these rules:\n"
-        "- Only comment on big actions (bets, raises, ALL INs).\n"
-        "- Aim for ~1 comment every 10 frames; no two YES within 10 seconds.\n"
+        "- Mainly comment on big actions (bets, raises, ALL INs) unless there has been a while since the last comment.\n"
+        "- Aim for ~1 comment every 5 frames; no two YES within 5 seconds.\n"
         "- Reply with a JSON array of the same length, each object:\n"
         "  {\"timestamp\": <number>, \"frame\": <int>, \"commentate\": \"YES\"|\"NO\"}\n"
         "Return _only_ the JSON array."
@@ -198,6 +198,7 @@ def analyze_video(video_path, prompt, interval_secs=1.0, max_workers=8, start_ti
             f"Moment analysis: {raw_results}\n"
             f"Current timestamp: {entry['timestamp']}\n"
             "Write a concise professional poker commentary (<=15 words). "
+            "Be sure there is alignment with the speech and timestamp - don't say stuff before it happens"
             """Be sure to be variable in the content you present — don't repeats
             content you already mentioned in the speech history. Specifically, sometimes
             it may be hard to tell what action happened. Check the moment analysis to see
@@ -230,6 +231,8 @@ def analyze_video(video_path, prompt, interval_secs=1.0, max_workers=8, start_ti
         For example, if it is alrady mentioend that someone did an action earlier
         in the speech, try not to mention again a direct manner\n"""
         "-If the text mentions abbreviations (like 20K), expand them to the full text (like 20 thousand)"
+        "-Be sure there is alignment with the speech and timestamp - don't say stuff before it happens"
+        "-Also occasionally add in more human features ('nervously added chips' for example). Don't just always mention the board information"
         "Maintain the same timestamps."
     )
     
@@ -271,7 +274,7 @@ def analyze_video(video_path, prompt, interval_secs=1.0, max_workers=8, start_ti
             voice_settings=VoiceSettings(
                 stability=0.0,
                 similarity_boost=1.0,
-                style=0.4,
+                style=0.3,
                 use_speaker_boost=True,
                 speed=1.0,
             ),

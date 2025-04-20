@@ -88,13 +88,13 @@ def process_video_chunk():
         Board: (cards on the board)
         Players:
             - name: (name)
-                cards: (cards - expand abbreviations to say like 'Ace of Clubs' instead of 'A\u2663')
+                cards: (cards - expand abbreviations to say like 'Ace of Clubs')
                 action: (action)
                 chips: (chips)
                 position: (position)
 
             - name: (name)
-                cards: (cards - expand abbreviations to say like 'Ace of Clubs' instead of 'A\u2663')
+                cards: (cards - expand abbreviations to say like 'Ace of Clubs')
                 action: (action)
                 chips: (chips)
                 position: (position)
