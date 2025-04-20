@@ -4,3 +4,7 @@ Pillow
 ffmpeg-python
 google-generativeai
 elevenlabs
+flask
+eventlet
+flask-socketio
+flask_cors

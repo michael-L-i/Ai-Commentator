@@ -1,246 +1,208 @@
-/*
-// ✅ frontend/src/App.jsx
+// frontend/src/App.jsx
 import { useState, useEffect, useRef } from 'react'
 import './App.css'
 
-function App() {
-  const [videoURL, setVideoURL] = useState(null)
-  const [countdown, setCountdown] = useState(null)
-  const [videoReady, setVideoReady] = useState(false)
-  const [isPlaying, setIsPlaying] = useState(false)
-  const [audioOffset, setAudioOffset] = useState(0)
-  const audioRef = useRef(null)
-  const videoRef = useRef(null)
-  const socketRef = useRef(null)
-  const pendingAudio = useRef(null)
+const API = import.meta.env.VITE_API_URL || 'http://localhost:5050'
+const POLL_INTERVAL = 100 // ms
 
-  useEffect(() => {
-    socketRef.current = new WebSocket('ws://localhost:3000')
-    socketRef.current.binaryType = 'blob'
+function PokerSync() {
+  const [videoURL, setVideoURL] = useState(null)
+  const [countdown, setCountdown] = useState(null)
+  const [videoReady, setVideoReady] = useState(false)
+  const [isPlaying, setIsPlaying] = useState(false)
 
-    socketRef.current.onopen = () => console.log('🎲 Connected to backend WebSocket')
+  const audioRef = useRef(null)
+  const videoRef = useRef(null)
+  const lastPlayed = useRef(null)
 
-    socketRef.current.onmessage = (event) => {
-      if (typeof event.data === 'string') {
-        const metadata = JSON.parse(event.data)
-        if (metadata.type === 'audio') {
-          setAudioOffset(metadata.offset || 0)
-        }
-      } else if (event.data instanceof Blob) {
-        const audioURL = URL.createObjectURL(event.data)
-        const audio = new Audio(audioURL)
-        audio.onloadedmetadata = () => {
-          audio.currentTime = audioOffset
-          audio.play().catch(err => console.warn('Playback error:', err))
-        }
-        audioRef.current = audio
-      }
-    }
+  // Poll every POLL_INTERVAL ms for next audio
+  useEffect(() => {
+    let interval
+    if (videoReady) {
+      interval = setInterval(async () => {
+        const video = videoRef.current
+        if (video && !video.paused) {
+          const t = video.currentTime
+          try {
+            const res = await fetch(`${API}/next-audio?time=${t}`)
+            const { filename, offset } = await res.json()
+            if (filename && filename !== lastPlayed.current) {
+              lastPlayed.current = filename
+              audioRef.current?.pause()
+              const blob = await fetch(`${API}/audio/${filename}`).then(r => r.blob())
+              const url = URL.createObjectURL(blob)
+              const audio = new Audio(url)
+              audio.onloadedmetadata = () => {
+                audio.currentTime = offset
+                audio.play().catch(console.warn)
+              }
+              audioRef.current = audio
+            }
+          } catch (e) {
+            console.error('Polling error', e)
+          }
+        }
+      }, POLL_INTERVAL)
+    }
+    return () => clearInterval(interval)
+  }, [videoReady])
 
-    return () => socketRef.current?.close()
-  }, [])
+  const handleFileChange = (e) => {
+    const file = e.target.files?.[0]
+    if (file) {
+      const url = URL.createObjectURL(file)
+      setVideoURL(url)
+      setVideoReady(false)
+      setIsPlaying(false)
+      setCountdown(null)
+      lastPlayed.current = null
+    }
+  }
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      const video = videoRef.current
-      if (video && socketRef.current?.readyState === WebSocket.OPEN && !video.paused) {
-        socketRef.current.send(
-          JSON.stringify({ type: 'sync', currentTime: video.currentTime })
-        )
-      }
-    }, 500)
-    return () => clearInterval(interval)
-  }, [])
+  const handleLoadedMetadata = () => {
+    const video = videoRef.current
+    if (video) {
+      video.pause()
+      setVideoReady(true)
+    }
+  }
 
-  const handleFileChange = (e) => {
-    const file = e.target.files?.[0]
-    if (file) {
-      const url = URL.createObjectURL(file)
-      setVideoURL(url)
-      setVideoReady(false)
-      setIsPlaying(false)
-      setCountdown(null)
-    }
-  }
+  const startCountdown = (seconds) => {
+    setCountdown(seconds)
+    const interval = setInterval(() => {
+      setCountdown((prev) => {
+        if (prev === 1) {
+          clearInterval(interval)
+          videoRef.current.play().then(() => setIsPlaying(true))
+          return null
+        }
+        return prev - 1
+      })
+    }, 1000)
+  }
 
-  const handleLoadedMetadata = () => {
-    const video = videoRef.current
-    if (video) {
-      video.pause()
-      setVideoReady(true)
-    }
-  }
+  return (
+    <div style={styles.table}>
+      <header style={styles.header}>
+        <h1 style={styles.title}>♠︎ PokerSync ♥︎</h1>
+        <p style={styles.tagline}>Your AI Poker Commentary Table</p>
+      </header>
 
-  const startCountdown = (seconds) => {
-    setCountdown(seconds)
-    const interval = setInterval(() => {
-      setCountdown(prev => {
-        if (prev === 1) {
-          clearInterval(interval)
-          const video = videoRef.current
-          if (video) {
-            video.play().then(() => {
-              setIsPlaying(true)
-              setCountdown(null)
-            })
-          }
-          return null
-        }
-        return prev - 1
-      })
-    }, 1000)
-  }
+      <div style={styles.uploadSection}>
+        <label style={styles.fileLabel}>
+          <input
+            type="file"
+            accept="video/*"
+            onChange={handleFileChange}
+            style={styles.fileInput}
+          />
+          Choose Your Hand
+        </label>
+      </div>
 
-  return (
-    <div>
-      <h1>Poker Sync</h1>
-      <input type="file" accept="video/*" onChange={handleFileChange} />
+      {videoURL && (
+        <div style={styles.videoWrapper}>
+          <video
+            ref={videoRef}
+            src={videoURL}
+            onLoadedMetadata={handleLoadedMetadata}
+            controls={false}
+            style={styles.video}
+          />
+        </div>
+      )}
 
-      {videoURL && (
-        <video
-          ref={videoRef}
-          src={videoURL}
-          onLoadedMetadata={handleLoadedMetadata}
-          controls={false}
-          style={{ width: '100%', pointerEvents: 'none', marginTop: '1rem' }}
-        />
-      )}
-
-      {videoReady && !isPlaying && countdown === null && (
-        <button onClick={() => startCountdown(5)}>▶️ Start Video</button>
-      )}
-
-      {countdown !== null && <h2>Starting in {countdown}...</h2>}
-    </div>
-  )
+      <div style={styles.controls}>
+        {videoReady && !isPlaying && countdown === null && (
+          <button style={styles.actionButton} onClick={() => startCountdown(5)}>
+            ♦︎ Deal in 5s ♦︎
+          </button>
+        )}
+        {countdown !== null && (
+          <span style={styles.countdown}>Starting in {countdown}...</span>
+        )}
+      </div>
+    </div>
+  )
 }
 
-export default App
-*/
-
-
-import { useState, useEffect, useRef } from 'react'
-import './App.css'
-
-// Hardcoded WebSocket URL to match Flask (or use VITE_WS_URL if you prefer)
-const WS_URL = 'ws://localhost:5050'
-
-function App() {
-  const [videoURL, setVideoURL] = useState(null)
-  const [countdown, setCountdown] = useState(null)
-  const [videoReady, setVideoReady] = useState(false)
-  const [isPlaying, setIsPlaying] = useState(false)
-  const [audioOffset, setAudioOffset] = useState(0)
-
-  const audioRef = useRef(null)
-  const videoRef = useRef(null)
-  const socketRef = useRef(null)
-
-  useEffect(() => {
-    console.log('🔌 Connecting to WebSocket: ws://localhost:5050');
-    const socket = new WebSocket('ws://localhost:5050');
-    socket.binaryType = 'blob';
-  
-    socket.onopen = () => console.log('✅ Connected to Flask backend');
-    socket.onerror = (e) => console.error('❌ WebSocket error:', e);
-    socket.onclose = () => console.warn('⚠️ WebSocket closed');
-  
-    socket.onmessage = (event) => {
-      console.log('📦 Received from backend:', event);
-      // ... your existing logic here ...
-    };
-  
-    socketRef.current = socket;
-    return () => socket.close();
-  }, []);
-  
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      const video = videoRef.current
-      if (
-        video &&
-        socketRef.current?.readyState === WebSocket.OPEN &&
-        !video.paused
-      ) {
-        const msg = JSON.stringify({
-          type: 'sync',
-          currentTime: video.currentTime,
-        })
-        socketRef.current.send(msg)
-        console.log('⏱ Sent sync:', msg)
-      }
-    }, 500)
-
-    return () => clearInterval(interval)
-  }, [])
-
-  const handleFileChange = (e) => {
-    const file = e.target.files?.[0]
-    if (file) {
-      const url = URL.createObjectURL(file)
-      setVideoURL(url)
-      setVideoReady(false)
-      setIsPlaying(false)
-      setCountdown(null)
-    }
-  }
-
-  const handleLoadedMetadata = () => {
-    const video = videoRef.current
-    if (video) {
-      video.pause()
-      setVideoReady(true)
-    }
-  }
-
-  const startCountdown = (seconds) => {
-    setCountdown(seconds)
-    const interval = setInterval(() => {
-      setCountdown((prev) => {
-        if (prev === 1) {
-          clearInterval(interval)
-          const video = videoRef.current
-          if (video) {
-            video.play().then(() => {
-              setIsPlaying(true)
-              setCountdown(null)
-            })
-          }
-          return null
-        }
-        return prev - 1
-      })
-    }, 1000)
-  }
-
-  return (
-    <div>
-      <h1>Poker Sync</h1>
-      <input type="file" accept="video/*" onChange={handleFileChange} />
-
-      {videoURL && (
-        <video
-          ref={videoRef}
-          src={videoURL}
-          onLoadedMetadata={handleLoadedMetadata}
-          controls={false}
-          style={{
-            width: '100%',
-            pointerEvents: 'none',
-            marginTop: '1rem',
-          }}
-        />
-      )}
-
-      {videoReady && !isPlaying && countdown === null && (
-        <button onClick={() => startCountdown(5)}>▶️ Start Video</button>
-      )}
-
-      {countdown !== null && <h2>Starting in {countdown}...</h2>}
-    </div>
-  )
+const styles = {
+  table: {
+    backgroundColor: '#014421',
+    width: '100%',          // full width
+    minHeight: '100vh',
+    padding: '2rem',
+    color: '#f8f1e5',
+    fontFamily: 'Georgia, serif',
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'stretch'   // stretch children to full width
+  },
+  header: {
+    textAlign: 'center',
+    marginBottom: '2rem'
+  },
+  title: {
+    fontSize: '3rem',
+    margin: 0,
+    letterSpacing: '0.1em'
+  },
+  tagline: {
+    fontSize: '1.25rem',
+    fontStyle: 'italic',
+    color: '#d4af37'
+  },
+  uploadSection: {
+    marginBottom: '1.5rem',
+    display: 'flex',
+    justifyContent: 'center'
+  },
+  fileLabel: {
+    backgroundColor: '#d4af37',
+    padding: '0.75rem 1.5rem',
+    borderRadius: '4px',
+    cursor: 'pointer',
+    fontWeight: 'bold',
+    color: '#014421'
+  },
+  fileInput: {
+    display: 'none'
+  },
+  videoWrapper: {
+    position: 'relative',
+    paddingBottom: '56.25%',
+    height: 0,
+    width: '100%',
+    marginBottom: '1.5rem'
+  },
+  video: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    width: '100%',
+    height: '100%',
+    border: '4px solid #d4af37',
+    borderRadius: '8px'
+  },
+  controls: {
+    textAlign: 'center',
+    marginTop: '1rem'
+  },
+  actionButton: {
+    backgroundColor: '#bb0a21',
+    color: '#fff',
+    padding: '0.75rem 2rem',
+    fontSize: '1rem',
+    border: 'none',
+    borderRadius: '25px',
+    cursor: 'pointer',
+    boxShadow: '0 4px 6px rgba(0,0,0,0.3)',
+    transition: 'transform 0.1s ease'
+  },
+  countdown: {
+    fontSize: '1.5rem',
+    marginTop: '0.5rem'
+  }
 }
 
-export default App
-
+export default PokerSync

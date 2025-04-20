@@ -32,8 +32,8 @@ def analyze_video(video_path, prompt, interval_secs=1.0, max_workers=8):
     analysis_path   = "./video_analysis.json"
     commentate_path = "./commentate_decisions.json"
     speech_path     = "./speech.json"
-    voice_path      = "./voice.js"
-    audio_dir       = "./audios"
+    voice_path      = "./manifest.json"
+    audio_dir       = "./audio"
 
     # Initialize empty histories
     comments = []
@@ -159,6 +159,7 @@ def analyze_video(video_path, prompt, interval_secs=1.0, max_workers=8):
                 speed=1.0,
             ),
         )
+
         audio_path = f"{audio_dir}/{entry['timestamp']}.mp3"
         with open(audio_path, "wb") as f:
             for chunk in response:
@@ -167,12 +168,13 @@ def analyze_video(video_path, prompt, interval_secs=1.0, max_workers=8):
         
         # Add entry to voice_entries list
         voice_entries.append({
-            "timestamp": entry["timestamp"],
-            "audio_path": audio_path
+            "filename": os.path.basename(audio_path),
+            "start": entry["timestamp"],
+            "end": entry["timestamp"] + float(ffmpeg.probe(audio_path)["format"]["duration"])
         })
 
-    # Save voice entries to voice.js
-    with open(voice_path, "w") as vf:
+    # Save voice entries to manifest.json
+    with open(f"{audio_dir}/{voice_path}", "w") as vf:
         json.dump(voice_entries, vf, indent=4)
     print(f"Wrote voice file paths to {voice_path}")
 
