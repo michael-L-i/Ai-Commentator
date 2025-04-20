@@ -2,7 +2,7 @@
 
 from analyze_hand import analyze_video
 
-VIDEO_PATH    = "./videos/clip2.mp4"
+VIDEO_PATH    = "./videos/clip1.mp4"
 OUTPUT_JSON   = "./video_analysis.json"
 PROMPT = '''
 Give me the details of the game in the moment. I want you to be very concise (no additional text).
