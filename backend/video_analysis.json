@@ -1,0 +1,112 @@
+[
+    {
+        "frame": 0,
+        "timestamp": 0.0,
+        "analysis": "Board: 10\u2665 9\u2665 K\u2665 Q\u2666\nPlayers:\n    - name: MIKKI\n        cards: 5\u2663 4\u2660\n        action: OPTION\n        chips: $279K\n        position: SB\n\n    - name: GARRETT\n        cards: A\u2660 K\u2663\n        action: CHECK\n        chips: $350K\n        position: UTG\n\nPot: $60.8K\nBlinds: $400 / $200"
+    },
+    {
+        "frame": 1,
+        "timestamp": 1.5,
+        "analysis": "Board: 10H 9H KH QD\nPlayers:\n    - name: MIKKI\n        cards: 5S 4S\n        action: OPTION\n        chips: $279K\n        position: SB\n\n    - name: GARRETT\n        cards: AS KC\n        action: \n        chips: $350K\n        position: UTG\n\nPot: $60.8K\nBlinds: 400 / 200"
+    },
+    {
+        "frame": 2,
+        "timestamp": 3.0,
+        "analysis": "Board: 10\u2665 9\u2665 K\u2665 Q\u2666\nPlayers:\n    - name: MIKKI\n        cards: 5\u2663 4\u2660\n        action: OPTION\n        chips: $279K\n        position: SB\n\n    - name: GARRETT\n        cards: A\u2660 K\u2663\n        action: Check\n        chips: $350K\n        position: UTG\n\nPot: $60.8K\nBlinds: 400 / 200"
+    },
+    {
+        "frame": 3,
+        "timestamp": 4.5,
+        "analysis": "Board: 10\u2665 9\u2665 K\u2665 Q\u2666\nPlayers:\n    - name: MIKKI\n        cards: 5\u2663 4\u2660\n        action: OPTION\n        chips: $279K\n        position: SB\n\n    - name: GARRETT\n        cards: A\u2660 K\u2663\n        action: CHECK\n        chips: $350K\n        position: UTG\n\nPot: $60.8K\nBlinds: $400 / $200"
+    },
+    {
+        "frame": 4,
+        "timestamp": 6.0,
+        "analysis": "Board: 10\u2665 9\u2665 K\u2665 Q\u2666\nPlayers:\n    - name: MIKKI\n        cards: 5\u2663 4\u2660\n        action: OPTION\n        chips: $279K\n        position: SB\n\n    - name: GARRETT\n        cards: A\u2660 K\u2663\n        action: Check\n        chips: $350K\n        position: UTG\n\nPot: $60.8K\nBlinds: 400 / 200"
+    },
+    {
+        "frame": 5,
+        "timestamp": 7.5,
+        "analysis": "Board: 10\u2665 9\u2665 K\u2665 Q\u2666\nPlayers:\n    - name: MIKKI\n        cards: 5\u2663 4\u2660\n        action: BET\n        chips: $259K\n        position: SB\n\n    - name: GARRETT\n        cards: A\u2660 K\u2663\n        action: CHECK\n        chips: $350K\n        position: UTG\n\nPot: $80\nBlinds: 400 / 200"
+    },
+    {
+        "frame": 6,
+        "timestamp": 9.0,
+        "analysis": "Board: 10\u2665 9\u2665 K\u2665 Q\u2666\nPlayers:\n    - name: MIKKI\n        cards: 5\u2663 4\u2660\n        action: BET $20K\n        chips: $259K\n        position: SB\n\n    - name: GARRETT\n        cards: A\u2660 K\u2663\n        action: $20K TO CALL\n        chips: $350K\n        position: UTG\n\nPot: $80.8K\nBlinds: 400 / 200"
+    },
+    {
+        "frame": 7,
+        "timestamp": 10.5,
+        "analysis": "Board: 10\u2665 9\u2665 K\u2665 Q\u2666\nPlayers:\n    - name: MIKKI\n        cards: 5\u2663 4\u2660\n        action: BET $20K\n        chips: $259K\n        position: SB\n\n    - name: GARRETT\n        cards: A\u2660 K\u2663\n        action: $20K TO CALL\n        chips: $350K\n        position: UTG\n\nPot: $80.8K\nBlinds: 400 / 200"
+    },
+    {
+        "frame": 8,
+        "timestamp": 12.0,
+        "analysis": "Board: 10\u2665 9\u2665 K\u2665 Q\u2666\nPlayers:\n    - name: MIKKI\n        cards: 5\u2663 4\u2660\n        action: BET $20K\n        chips: $259K\n        position: SB\n\n    - name: GARRETT\n        cards: A\u2660 K\u2663\n        action: $20K TO CALL\n        chips: $350K\n        position: UTG\n\nPot: $80.8K\nBlinds: 400 / 200"
+    },
+    {
+        "frame": 9,
+        "timestamp": 13.5,
+        "analysis": "Board: 10\u2665 9\u2665 K\u2665 Q\u2666\nPlayers:\n    - name: MIKKI\n        cards: 5\u2663 4\u2660\n        action: BET $20K\n        chips: $259K\n        position: SB\n\n    - name: GARRETT\n        cards: A\u2660 K\u2663\n        action: $20K TO CALL\n        chips: $350K\n        position: UTG\n\nPot: $80.8K\nBlinds: 400 / 200"
+    },
+    {
+        "frame": 10,
+        "timestamp": 15.0,
+        "analysis": "Board: 10\u2665 9\u2665 K\u2665 Q\u2666\nPlayers:\n    - name: MIKKI\n        cards: 5\u2663 4\u2660\n        action: BET $20K\n        chips: $259K\n        position: SB\n\n    - name: GARRETT\n        cards: A\u2660 K\u2663\n        action: $20K TO CALL\n        chips: $350K\n        position: UTG\n\nPot: $80.8K\nBlinds: 400 / 200"
+    },
+    {
+        "frame": 11,
+        "timestamp": 16.5,
+        "analysis": "Board: 10\u2665 9\u2665 K\u2665 Q\u2666\nPlayers:\n    - name: MIKKI\n        cards: 5\u2663 4\u2660\n        action: BET $20K\n        chips: $259K\n        position: SB\n\n    - name: GARRETT\n        cards: A\u2660 K\u2663\n        action: $20K TO CALL\n        chips: $350K\n        position: UTG\n\nPot: $80.8K\nBlinds: 400 / 200"
+    },
+    {
+        "frame": 12,
+        "timestamp": 18.0,
+        "analysis": "Board: 10\u2665 9\u2665 K\u2665 Q\u2666\nPlayers:\n    - name: MIKKI\n        cards: 5\u2663 4\u2660\n        action: BET $20K\n        chips: $259K\n        position: SB\n\n    - name: GARRETT\n        cards: A\u2660 K\u2663\n        action: $20K TO CALL\n        chips: $350K\n        position: UTG\n\nPot: $80.8K\nBlinds: 400 / 200"
+    },
+    {
+        "frame": 13,
+        "timestamp": 19.5,
+        "analysis": "Board: 10\u2665 9\u2665 K\u2665 Q\u2666\nPlayers:\n    - name: MIKKI\n        cards: 5\u2663 4\u2660\n        action: BET $20K\n        chips: $259K\n        position: SB\n\n    - name: GARRETT\n        cards: A\u2660 K\u2663\n        action: $20K TO CALL\n        chips: $350K\n        position: UTG\n\nPot: $80.8K\nBlinds: 400 / 200"
+    },
+    {
+        "frame": 14,
+        "timestamp": 21.0,
+        "analysis": "Board: 10\u2665 9\u2665 K\u2665 Q\u2666\nPlayers:\n    - name: MIKKI\n        cards: 5\u2663 4\u2660\n        action: BET $20K\n        chips: $259K\n        position: SB\n\n    - name: GARRETT\n        cards: A\u2660 K\u2663\n        action: $20K TO CALL\n        chips: $350K\n        position: UTG\n\nPot: $80.8K\nBlinds: 400 / 200"
+    },
+    {
+        "frame": 15,
+        "timestamp": 22.5,
+        "analysis": "Board: 10\u2665 9\u2665 K\u2665 Q\u2666\nPlayers:\n    - name: MIKKI\n        cards: 5\u2663 4\u2660\n        action: BET $20K\n        chips: $259K\n        position: SB\n\n    - name: GARRETT\n        cards: A\u2660 K\u2663\n        action: $20K TO CALL\n        chips: $350K\n        position: UTG\n\nPot: $80.8K\nBlinds: $400 / $200"
+    },
+    {
+        "frame": 16,
+        "timestamp": 24.0,
+        "analysis": "Board: 10\u2665 9\u2665 K\u2665 Q\u2666\nPlayers:\n    - name: MIKKI\n        cards: 5\u2663 4\u2660\n        action: BET $20K\n        chips: $259K\n        position: SB\n\n    - name: GARRETT\n        cards: A\u2660 K\u2663\n        action: $20K TO CALL\n        chips: $350K\n        position: UTG\n\nPot: $80.8K\nBlinds: 400 / 200"
+    },
+    {
+        "frame": 17,
+        "timestamp": 25.5,
+        "analysis": "Board: 10\u2665 9\u2665 K\u2665 Q\u2666\nPlayers:\n    - name: MIKKI\n        cards: 5\u2663 4\u2660\n        action: BET $20K\n        chips: $259K\n        position: SB\n\n    - name: GARRETT\n        cards: A\u2660 K\u2663\n        action: $20K TO CALL\n        chips: $350K\n        position: UTG\n\nPot: $80.8K\nBlinds: 400 / 200"
+    },
+    {
+        "frame": 18,
+        "timestamp": 27.0,
+        "analysis": "Board: 10\u2665 9\u2665 K\u2665 Q\u2666\nPlayers:\n    - name: MIKKI\n        cards: 5\u2663 4\u2660\n        action: BET $20K\n        chips: $259K\n        position: SB\n\n    - name: GARRETT\n        cards: A\u2660 K\u2663\n        action: $20K TO CALL\n        chips: $350K\n        position: UTG\n\nPot: $80.8K\nBlinds: 400 / 200"
+    },
+    {
+        "frame": 19,
+        "timestamp": 28.5,
+        "analysis": "Board: 10\u2665 9\u2665 K\u2665 Q\u2666\nPlayers:\n    - name: MIKKI\n        cards: 5\u2663 4\u2660\n        action: BET $20K\n        chips: $259K\n        position: SB\n\n    - name: GARRETT\n        cards: A\u2660 K\u2663\n        action: $20K TO CALL\n        chips: $350K\n        position: UTG\n\nPot: $80.8K\nBlinds: 400 / 200"
+    },
+    {
+        "frame": 20,
+        "timestamp": 30.0,
+        "analysis": "Board: 10\u2665 9\u2665 K\u2665 Q\u2666\nPlayers:\n    - name: MIKKI\n        cards: 5\u2663 4\u2660\n        action: BET $20K\n        chips: $259K\n        position: SB\n\n    - name: GARRETT\n        cards: A\u2660 K\u2663\n        action: CALL $20K\n        chips: $330K\n        position: UTG\n\nPot: $101K\nBlinds: 400 / 200"
+    },
+    {
+        "frame": 21,
+        "timestamp": 31.5,
+        "analysis": "Board: 10\u2665 9\u2665 K\u2665 Q\u2666\nPlayers:\n    - name: MIKKI\n        cards: 5\u2663 4\u2660\n        action: BET $20K\n        chips: $259K\n        position: SB\n\n    - name: GARRETT\n        cards: A\u2660 K\u2663\n        action: CALL $20K\n        chips: $330K\n        position: UTG\n\nPot: $101K\nBlinds: $400 / $200"
+    }
+]

@@ -1,0 +1,6 @@
+google-genai
+python-dotenv
+Pillow
+ffmpeg-python
+google-generativeai
+elevenlabs

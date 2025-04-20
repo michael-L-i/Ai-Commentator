@@ -1,0 +1,4 @@
+# backend/.gitignore
+
+# Ignore all files in the videos directory
+videos/
